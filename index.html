@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f8faf6">
+  <title>R²-WAM · What Visual Representations Do World Action Models Need?</title>
+  <meta name="description" content="A systematic study of visual representation selection, integration, and composition in world action models. Introducing R²-WAM: a representation recipe for robot manipulation.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="R²-WAM — What Visual Representations Do World Action Models Need?">
+  <meta property="og:description" content="13 visual encoders. 5 integration mechanisms. A practical representation recipe for world action models.">
+  <meta property="og:image" content="https://kailiu18.github.io/R-2WAM.github.io/assets/images/video-poster.jpg">
+  <meta property="og:url" content="https://kailiu18.github.io/R-2WAM.github.io/">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://kailiu18.github.io/R-2WAM.github.io/">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <nav class="nav container" aria-label="Main navigation">
+      <a class="brand" href="#" aria-label="R squared WAM home">R<sup>2</sup><span>–WAM</span><i aria-hidden="true"></i></a>
+      <div class="nav-links"><a href="#overview">Overview</a><a href="#findings">Findings</a><a href="#experiments">Experiments</a><a href="#citation">Citation <span aria-hidden="true">↗</span></a></div>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="hero container" aria-labelledby="paper-title">
+      <p class="eyebrow"><span class="small-line" aria-hidden="true"></span> VISUAL REPRESENTATIONS FOR ROBOT LEARNING</p>
+      <h1 id="paper-title">What Visual Representations<br class="desktop-break"> Do <em>World Action Models</em> Need?</h1>
+      <p class="hero-summary">What to represent. How to integrate. When to combine.</p>
+      <div class="authors" aria-label="Authors">
+        <span>Kai Liu<sup>1,2,*</sup></span><span>Jiangran Lyu<sup>2,3,*</sup></span><span>Tingyu Deng<sup>3</sup></span><span>Yixin Zheng<sup>1,2</sup></span><span>Jingtian Wan<sup>2,4</sup></span><span>Cui Wenbo<sup>1,2</sup></span><span>Mi Yan<sup>2,3</sup></span><span>Yizhou Zhou<sup>5</sup></span><span>Haoran Li<sup>1</sup></span><span>Dongbin Zhao<sup>1,†</sup></span><span>Zhizheng Zhang<sup>2,†</sup></span><span>He Wang<sup>2,3,†</sup></span>
+      </div>
+      <div class="affiliations"><span><sup>1</sup> Institute of Automation, Chinese Academy of Sciences</span><span><sup>2</sup> Galbot</span><span><sup>3</sup> Peking University</span><span><sup>4</sup> University of Science and Technology of China</span><span><sup>5</sup> Individual Researcher</span></div>
+      <p class="author-notes">* Equal contribution <span>·</span> † Co-corresponding authors</p>
+      <div class="hero-actions"><a class="button primary" href="#findings">Explore the findings <span aria-hidden="true">↘</span></a><a class="button secondary" href="#experiments"><span class="play-icon" aria-hidden="true">▶</span> Watch robot experiments</a></div>
+      <p class="release-note"><span class="status-dot" aria-hidden="true"></span> arXiv preprint forthcoming</p>
+    </section>
+
+    <div class="robot-strip container" aria-label="Four physical manipulation tasks from the paper">
+      <a href="#experiments" class="robot-shot"><img src="assets/images/air-fryer.webp" width="480" height="270" alt="Galbot robot placing a corn cob in an air fryer" fetchpriority="high"><span><b>01</b> Air-fryer preparation <i aria-hidden="true">↗</i></span></a>
+      <a href="#experiments" class="robot-shot"><img src="assets/images/pick-place.webp" width="480" height="270" alt="Robot selecting and placing an instructed object"><span><b>02</b> Instructed pick-and-place <i aria-hidden="true">↗</i></span></a>
+      <a href="#experiments" class="robot-shot"><img src="assets/images/sweeping.webp" width="480" height="270" alt="Robot using a brush and dustpan to collect debris"><span><b>03</b> Tool sweeping <i aria-hidden="true">↗</i></span></a>
+      <a href="#experiments" class="robot-shot"><img src="assets/images/cup-pushing.webp" width="480" height="270" alt="Robot pushing a cup toward a tissue box"><span><b>04</b> Cup pushing <i aria-hidden="true">↗</i></span></a>
+    </div>
+
+    <section id="overview" class="section container" aria-labelledby="overview-title">
+      <div class="section-heading"><p class="eyebrow">THE STUDY</p><h2 id="overview-title">Beyond the inherited<br><em>visual representation.</em></h2></div>
+      <div class="overview-copy"><p class="lead">World action models inherit powerful video-generation priors. But which visual features help them act?</p><p>We study this question within a common WAM framework, comparing representation sources, feature integration mechanisms, and combinations of sources. The result is a practical <strong>Representation Recipe — R²-WAM</strong> — validated across WAM formulations, simulation benchmarks, and physical robot tasks.</p></div>
+      <div class="study-scope"><div><strong>13</strong><span>pretrained visual encoders</span></div><div><strong>5</strong><span>feature integration mechanisms</span></div><div><strong>3</strong><span>research questions</span></div></div>
+      <figure class="paper-figure overview-figure"><a class="zoom-figure" href="assets/images/overview.webp" data-figure="Overview of the controlled study and validation settings" aria-label="Enlarge study overview"><img src="assets/images/overview.webp" width="2600" height="1051" loading="lazy" alt="Paper overview: visual sources, five integration mechanisms, progressive feature composition, and validation across robot settings"><span class="zoom-label">View full figure <span aria-hidden="true">↗</span></span></a><figcaption>The study connects representation choice, integration, and composition under a shared training protocol.</figcaption></figure>
+    </section>
+
+    <section id="findings" class="findings-section" aria-labelledby="findings-title">
+      <div class="container">
+        <div class="section-intro"><div><p class="eyebrow">THREE QUESTIONS, THREE FINDINGS</p><h2 id="findings-title">A closer look at<br><em>what makes a difference.</em></h2></div><p>Explore the evidence behind the recipe.<br>All LIBERO-Plus scores are success rates (%).</p></div>
+        <div class="research-tabs" role="tablist" aria-label="Research questions">
+          <button type="button" id="tab-sources" role="tab" aria-selected="true" aria-controls="panel-sources" tabindex="0"><span>01</span><b>Representation choice</b><i aria-hidden="true">↗</i></button>
+          <button type="button" id="tab-integration" role="tab" aria-selected="false" aria-controls="panel-integration" tabindex="-1"><span>02</span><b>Feature integration</b><i aria-hidden="true">↗</i></button>
+          <button type="button" id="tab-composition" role="tab" aria-selected="false" aria-controls="panel-composition" tabindex="-1"><span>03</span><b>Feature composition</b><i aria-hidden="true">↗</i></button>
+        </div>
+
+        <div id="panel-sources" class="research-panel" role="tabpanel" aria-labelledby="tab-sources" tabindex="0">
+          <div class="finding-copy"><p class="eyebrow">RQ1 · WHICH REPRESENTATIONS HELP?</p><h3>Start with a strong<br>general-purpose representation.</h3><p>Across the evaluated encoders, general-purpose representations achieve a higher average LP success rate than specialized representations: <strong>82.2% versus 80.0%</strong>. A general-purpose encoder has the highest observed mean in each of the seven perturbation categories.</p><div class="finding-stat"><strong>+9.3<span>pp</span></strong><p>DINOv3 over the VAE-only baseline<br><small>84.0% vs. 74.7% overall success</small></p></div><div class="chart-legend"><span><i class="dot general"></i> General-purpose</span><span><i class="dot specialized"></i> Specialized</span><span><i class="dot baseline"></i> VAE-only</span></div></div>
+          <div class="source-explorer"><div class="chart-heading"><h4>Single-source comparison</h4><label for="metric-select">Evaluate by <select id="metric-select"><option value="total">Overall</option><option value="camera">Camera</option><option value="robot">Robot</option><option value="language">Language</option><option value="lighting">Lighting</option><option value="background">Background</option><option value="noise">Image noise</option><option value="layout">Layout</option></select></label></div><p class="chart-note" id="chart-description">Channel-wise concatenation · mean over three evaluation seeds</p><div id="source-chart" class="source-chart" aria-describedby="chart-description"></div><p class="chart-footnote" id="chart-status" aria-live="polite">Overall LIBERO-Plus success. Bars use a 0–100% scale.</p><noscript><p>DINOv3: 84.0%; C-RADIOv4: 83.5%; SigLIP 2: 83.1%; VAE-only: 74.7%. Enable JavaScript to explore all sources and perturbation categories.</p></noscript></div>
+        </div>
+
+        <div id="panel-integration" class="research-panel" role="tabpanel" aria-labelledby="tab-integration" tabindex="0" hidden>
+          <div class="finding-copy wide"><p class="eyebrow">RQ2 · HOW SHOULD FEATURES BE INTEGRATED?</p><h3>Predict future features.<br>Integrate them through shared visual tokens.</h3><p>Channel-wise concatenation gives the highest average LP success across thirteen sources: <strong>81.5%</strong>, or <strong>5.1 percentage points</strong> above the next-best mechanism. The DINOv3 ablation supports future-feature prediction as a major contributor.</p><div class="mini-results"><div><span>Current only</span><strong>76.5%</strong></div><div><span>Future only</span><strong>81.9%</strong></div><div class="highlight"><span>Current + future</span><strong>84.0%</strong></div></div></div>
+          <figure class="paper-figure panel-figure"><a class="zoom-figure" href="assets/images/mechanisms.webp" data-figure="Feature integration performance, prediction ablations, and local action sensitivity" aria-label="Enlarge integration results"><img src="assets/images/mechanisms.webp" width="2600" height="980" loading="lazy" alt="Comparison of five mechanisms, current and future feature ablations, predicted feature maps, and local action sensitivity"><span class="zoom-label">View full figure ↗</span></a><figcaption>Local gradient diagnostics show stronger action dependence on current DINOv3 features in the selected observation states.</figcaption></figure>
+        </div>
+
+        <div id="panel-composition" class="research-panel" role="tabpanel" aria-labelledby="tab-composition" tabindex="0" hidden>
+          <div class="finding-copy wide"><p class="eyebrow">RQ3 · IS ADDING MORE ALWAYS BETTER?</p><h3>Complementarity matters.<br>More sources do not always help.</h3><p>DINOv3 provides the main improvement over VAE-only: <strong>+9.3 percentage points</strong>. The best evaluated combination adds a further <strong>3.7 points</strong>. The benefit of each additional source depends on the representations already present.</p><p class="specific-example">For example, adding SigLIP 2 changes success by <strong>+1.8</strong> points with DINOv3, <strong>−0.4</strong> with DINOv3 + UniTok, and <strong>+0.2</strong> with DINOv3 + UniTok + V-JEPA 2.1.</p></div>
+          <figure class="paper-figure panel-figure"><a class="zoom-figure" href="assets/images/composition.webp" data-figure="Progressive feature composition on LIBERO-Plus" aria-label="Enlarge composition results"><img src="assets/images/composition.webp" width="2600" height="651" loading="lazy" alt="Progressive composition results, starting from the 74.7 percent VAE-only baseline and 84.0 percent DINOv3, with gains and declines from additional sources"><span class="zoom-label">View full figure ↗</span></a><figcaption>Mean ± standard deviation over three evaluation seeds. Each bar adds its source to the indicated base combination.</figcaption></figure>
+        </div>
+      </div>
+    </section>
+
+    <section id="recipe" class="section container recipe-section" aria-labelledby="recipe-title">
+      <div class="section-intro"><div><p class="eyebrow">FROM FINDINGS TO A RECIPE</p><h2 id="recipe-title">Introducing <em>R²-WAM.</em></h2></div><p>A compact combination of visual representations,<br>integrated through channel-wise concatenation.</p></div>
+      <div class="recipe-flow" aria-label="R squared WAM combines DINOv3, UniTok, and V-JEPA 2.1 through channel-wise concatenation"><div><span>VISUAL SELF-SUPERVISION</span><strong>DINOv3</strong></div><i aria-hidden="true">+</i><div><span>MULTI-OBJECTIVE LEARNING</span><strong>UniTok</strong></div><i aria-hidden="true">+</i><div><span>VIDEO PREDICTIVE LEARNING</span><strong>V-JEPA 2.1</strong></div><i aria-hidden="true">→</i><div class="recipe-output"><span>CHANNEL-WISE CONCATENATION</span><strong>R<sup>2</sup>-WAM</strong></div></div>
+      <p class="recipe-note">The three-source recipe reaches <strong>87.3%</strong> on LIBERO-Plus. Adding HRP reaches 87.7%; we retain three sources to limit auxiliary encoders and feature-prediction targets.</p>
+      <figure class="paper-figure"><a class="zoom-figure" href="assets/images/integration.webp" data-figure="The five feature integration mechanisms studied in the paper" aria-label="Enlarge integration architecture"><img src="assets/images/integration.webp" width="2050" height="655" loading="lazy" alt="Five architectures: representation alignment, gated cross-attention, channel-wise concatenation, token-wise concatenation, and a dedicated feature expert"><span class="zoom-label">View full figure ↗</span></a><figcaption>Five ways of incorporating external visual representations into a world action model.</figcaption></figure>
+    </section>
+
+    <section class="validation-section" aria-labelledby="validation-title"><div class="container">
+      <div class="section-intro"><div><p class="eyebrow">VALIDATION BEYOND THE MAIN STUDY</p><h2 id="validation-title">The same recipe.<br><em>Different settings.</em></h2></div><p>Improvements over corresponding VAE-only baselines<br>across simulation benchmarks and WAM formulations.</p></div>
+      <div class="benchmark-grid"><article><p class="eyebrow">ROBOCASA GR1 TABLETOP</p><p class="big-score">84.7<span>%</span></p><p class="gain">+5.9 percentage points</p><p class="benchmark-context">VAE-only: 78.8%<br>24 tasks · 50 trials per task</p></article><article><p class="eyebrow">ROBOTWIN 2.0</p><p class="big-score">92.8<span>%</span></p><p class="gain">+2.2 percentage points</p><p class="benchmark-context">VAE-only: 90.6%<br>50 tasks · clean and randomized settings</p></article><article class="formulations"><p class="eyebrow">OTHER WAM FORMULATIONS</p><div><span>Direct action prediction</span><p><span class="old-score">70.8</span> <i aria-hidden="true">→</i> <strong>79.4%</strong></p></div><div><span>Video-then-action (IDM)</span><p><span class="old-score">73.6</span> <i aria-hidden="true">→</i> <strong>87.7%</strong></p></div><p class="benchmark-context">LIBERO-Plus success · VAE-only → + recipe</p></article></div>
+    </div></section>
+
+    <section id="experiments" class="section container robot-section" aria-labelledby="robot-title">
+      <div class="section-intro"><div><p class="eyebrow">ON A PHYSICAL ROBOT</p><h2 id="robot-title">From visual features<br><em>to everyday actions.</em></h2></div><p>Four manipulation tasks on Galbot G1.<br>20 evaluation trials per task, per model.</p></div>
+      <div class="video-frame"><video id="robot-video" controls playsinline preload="none" poster="assets/images/video-poster.jpg" aria-label="Real-robot demonstrations: air-fryer preparation, instructed pick-and-place, tool sweeping, and cup pushing"><source src="assets/videos/real-world-demos.mp4" type="video/mp4">Your browser does not support embedded video. <a href="assets/videos/real-world-demos.mp4">Download the robot demonstrations.</a></video></div>
+      <p class="video-caption"><span class="status-dot" aria-hidden="true"></span> Demonstrations from the paper’s supplementary material <span>01:34</span></p>
+      <div class="table-wrap"><table class="results-table"><caption>Real-robot evaluation</caption><thead><tr><th scope="col">Task</th><th scope="col">Metric</th><th scope="col">VAE-only</th><th scope="col">R²-WAM</th></tr></thead><tbody><tr><th scope="row">Air-fryer food preparation</th><td>Complete-task success</td><td>50.0%</td><td><strong>60.0%</strong></td></tr><tr><th scope="row">Instructed pick-and-place</th><td>Complete-task success</td><td>70.0%</td><td><strong>80.0%</strong></td></tr><tr><th scope="row">Tool sweeping</th><td>Mean debris collection rate</td><td>48.3%</td><td><strong>66.7%</strong></td></tr><tr><th scope="row">Cup pushing</th><td>Complete-task success</td><td>65.0%</td><td><strong>75.0%</strong></td></tr></tbody></table></div>
+      <p class="table-note">Sweeping measures the proportion of six debris pieces collected per trial; the other tasks measure complete-task success.</p>
+    </section>
+
+    <section id="citation" class="citation-section"><div class="container citation-layout"><div><p class="eyebrow">REFERENCE THIS WORK</p><h2>A recipe for<br><em>further research.</em></h2><p>The arXiv preprint is forthcoming.<br>For now, cite this project page.</p></div><div class="citation-box"><div class="citation-bar"><span>BIBTEX</span><button id="copy-citation" type="button">Copy citation <span aria-hidden="true">⧉</span></button></div><pre id="bibtex">@misc{liu2026r2wam,
+  title = {What Visual Representations Do World Action Models Need?},
+  author = {Kai Liu and Jiangran Lyu and Tingyu Deng and Yixin Zheng
+    and Jingtian Wan and Cui Wenbo and Mi Yan and Yizhou Zhou
+    and Haoran Li and Dongbin Zhao and Zhizheng Zhang and He Wang},
+  year = {2026},
+  howpublished = {Project website},
+  url = {https://kailiu18.github.io/R-2WAM.github.io/}
+}</pre><span id="copy-status" class="sr-only" role="status"></span></div></div></section>
+  </main>
+
+  <footer class="site-footer container"><a class="brand" href="#">R<sup>2</sup><span>–WAM</span></a><p>What Visual Representations Do World Action Models Need?</p><a href="https://github.com/KaiLiu18/R-2WAM.github.io" target="_blank" rel="noopener noreferrer">Website source <span aria-hidden="true">↗</span></a></footer>
+
+  <dialog id="figure-dialog" aria-labelledby="figure-title"><div class="dialog-toolbar"><h2 id="figure-title">Paper figure</h2><button id="close-figure" type="button" aria-label="Close figure">Close <span aria-hidden="true">×</span></button></div><div class="dialog-image-wrap"><img id="dialog-image" src="assets/images/overview.webp" alt=""></div><p>Scroll to inspect the full figure. Press Esc to close.</p></dialog>
+</body>
+</html>
