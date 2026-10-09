@@ -24,30 +24,73 @@ const sourceChart = document.querySelector('#source-chart');
 
 function renderSources() {
   const metricIndex = metrics.indexOf(metricSelect.value);
+  const baseline = sources[0].scores[metricIndex];
+  const deltas = sources.slice(1).map(source => source.scores[metricIndex] - baseline);
   const highest = Math.max(...sources.slice(1).map(source => source.scores[metricIndex]));
+  const step = Math.max(...deltas) > 10 ? 5 : 2;
+  const minimum = Math.floor(Math.min(0,...deltas) / step) * step;
+  const maximum = Math.max(step,Math.ceil(Math.max(...deltas) / step) * step);
+  const position = value => (value - minimum) / (maximum - minimum) * 100;
+  const signed = value => `${value < -0.05 ? '−' : '+'}${Math.abs(value).toFixed(1)}`;
+  const groupMeans = {};
   sourceChart.replaceChildren();
-  sources.forEach(source => {
-    const value = source.scores[metricIndex];
-    const row = document.createElement('div');
-    row.className = `source-row ${source.group}${value === highest ? ' best' : ''}`;
-    const label = document.createElement('span');
-    label.className = 'source-name';
-    label.textContent = source.name;
-    const track = document.createElement('div');
-    track.className = 'bar-track';
-    track.setAttribute('aria-hidden','true');
-    const bar = document.createElement('div');
-    bar.className = 'bar-fill';
-    bar.style.setProperty('--score',`${value}%`);
-    track.append(bar);
-    const score = document.createElement('span');
-    score.className = 'source-value';
-    score.textContent = value.toFixed(1) + '%';
-    row.append(label,track,score);
-    sourceChart.append(row);
+  [['general','General-purpose'],['specialized','Specialized']].forEach(([key,title]) => {
+    const members = sources.filter(source => source.group === key)
+      .sort((a,b) => b.scores[metricIndex] - a.scores[metricIndex]);
+    const mean = members.reduce((sum,source) => sum + source.scores[metricIndex],0) / members.length;
+    groupMeans[key] = mean;
+    const group = document.createElement('section');
+    group.className = `source-group ${key}`;
+    group.setAttribute('aria-label',`${title} representations`);
+    group.style.setProperty('--zero',`${position(0)}%`);
+    group.style.setProperty('--grid-step',`${step / (maximum - minimum) * 100}%`);
+    const heading = document.createElement('div');
+    heading.className = 'source-group-heading';
+    heading.innerHTML = `<div><h5>${title}</h5><span>${members.length} encoders</span></div><div class="group-mean"><span>Group mean</span><strong>${mean.toFixed(1)}<small>%</small></strong><span>${signed(mean - baseline)} pp vs. VAE-only</span></div>`;
+    const axis = document.createElement('div');
+    axis.className = 'source-axis';
+    axis.setAttribute('aria-hidden','true');
+    axis.innerHTML = '<span>Encoder</span><div class="gain-axis"></div><span>Δ pp</span><span>SR %</span>';
+    for (let tick = minimum; tick <= maximum; tick += step) {
+      const mark = document.createElement('span');
+      mark.textContent = tick < 0 ? `−${Math.abs(tick)}` : tick > 0 ? `+${tick}` : '0';
+      mark.style.left = `${position(tick)}%`;
+      axis.querySelector('.gain-axis').append(mark);
+    }
+    const rows = document.createElement('div');
+    rows.className = 'source-rows';
+    members.forEach(source => {
+      const value = source.scores[metricIndex];
+      const delta = value - baseline;
+      const row = document.createElement('div');
+      row.className = `source-row${value === highest ? ' best' : ''}`;
+      const label = document.createElement('span');
+      label.className = 'source-name';
+      label.textContent = source.name;
+      const track = document.createElement('div');
+      track.className = 'bar-track';
+      track.setAttribute('aria-hidden','true');
+      const bar = document.createElement('div');
+      bar.className = 'bar-fill';
+      bar.style.left = `${position(Math.min(0,delta))}%`;
+      bar.style.width = `${Math.abs(delta) / (maximum - minimum) * 100}%`;
+      track.append(bar);
+      const gain = document.createElement('span');
+      gain.className = 'source-gain';
+      gain.innerHTML = `${signed(delta)}<span class="sr-only"> percentage points versus VAE-only</span>`;
+      const score = document.createElement('span');
+      score.className = 'source-value';
+      score.innerHTML = `${value.toFixed(1)}<span class="sr-only"> percent success rate</span>`;
+      row.append(label,track,gain,score);
+      rows.append(row);
+    });
+    group.append(heading,axis,rows);
+    sourceChart.append(group);
   });
   const label = metricSelect.options[metricSelect.selectedIndex].text;
-  document.querySelector('#chart-status').textContent = `${label} LIBERO-Plus success. Bars use a 0–100% scale. Highest observed mean: ${highest.toFixed(1)}%.`;
+  document.querySelector('#baseline-score').innerHTML = `VAE-only baseline: <strong>${baseline.toFixed(1)}%</strong>`;
+  const difference = groupMeans.general - groupMeans.specialized;
+  document.querySelector('#chart-status').textContent = `${label}: general-purpose mean ${groupMeans.general.toFixed(1)}%, specialized mean ${groupMeans.specialized.toFixed(1)}% (${Math.abs(difference).toFixed(1)} pp ${difference >= 0 ? 'higher' : 'lower'} for general-purpose). Both groups share the same gain axis; the range adjusts to the selected condition. Encoders are sorted within each group.`;
 }
 metricSelect.addEventListener('change',renderSources);
 renderSources();
